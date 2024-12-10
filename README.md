@@ -39,11 +39,45 @@ Data for this project was sourced from  [GlobalPetrolPrices.com](https://www.glo
 ### Data Collection
 The data was scraped using Python libraries Beautiful Soup and Requests to ensure accurate and detailed insights into global gasoline price trends. Specifically, the following tasks were performed: 
 - Importing the Libraries
+```python 3
+from bs4 import BeautifulSoup
+import requests
+import pandas as pd
+```
+
 - Specifying the URL
+  ```python 3
+  url = 'https://www.globalpetrolprices.com/gasoline_prices/'
+  ```
+
 - Sending an HTTP request to the website and retrieving the HTML content
+
+```python 3
+page = requests.get(url)
+soup = BeautifulSoup(page.text, 'html')
+soup
+```
+
 - Parsing the HTML content to extract the relevant data fields
+
+  ```python 3
+  data_column1 = soup.find_all('a', {'class': 'graph_outside_link'})
+  data_column2 = soup.find_all('div', {'id': 'graphic'})
+  ```
+  
 - Cleaning and structuring the extracted data into a tabular format using pandas
+
+  ``` python 3
+  column_columnA = [column.text.strip() for column in data_column1]
+  column_columnB = [column2.text.strip() for column2 in data_column2]
+  column_columnC = [item.strip() for item in column_columnB[0].split('\n\n')]
+  df = pd.DataFrame({'Countries': column_columnA, 'Gasoline price': column_columnC})
+  print(df)
+  ```
 - Exporting the cleaned dataset to a CSV file for further analysis and visualization
+  ``` python 3
+  df.to_csv('worldwide gasoline prices.csv', index = False)
+  ```
 
 
 
